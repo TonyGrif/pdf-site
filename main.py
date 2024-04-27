@@ -2,6 +2,8 @@
 
 import argparse
 
+import requests
+
 
 def main():
     """Main driver for the PDF Site project."""
@@ -17,7 +19,13 @@ def main():
     )
 
     args = parser.parse_args()
-    print(args)
+
+    try:
+        response = requests.get(args.root_uri)
+    # TODO: Specificity
+    except Exception:
+        parser.exit(-1, "Invalid root URI supplied\n")
+    assert response.status_code == 200
 
 
 if __name__ == "__main__":
